@@ -10,11 +10,6 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
     private final UserBd userBd;
 
-    public User getById(Long userId) {
-        User user = userBd.getUsers().get(userId);
-        return user;
-    }
-
     public User getUserByFullName(String firstName, String lastName) {
         for (User user : userBd.getUsers().values()) {
             if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName)) {

@@ -13,13 +13,6 @@ public class UserServiceImpl {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    public UserRequestDto getUserById(Long userId) {
-        User user = userRepository.getById(userId);
-        UserRequestDto userRequestDto = userMapper.toDto(user);
-        return userRequestDto;
-    }
-
     public UserRequestDto getUserByFullName(String firstName, String lastName) {
         User user = userRepository.getUserByFullName(firstName, lastName);
         UserRequestDto userRequestDto = userMapper.toDto(user);

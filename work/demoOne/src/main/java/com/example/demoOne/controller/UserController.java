@@ -20,9 +20,4 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<UserRequestDto> getUserByFullName(@RequestParam String firstName,
-                                                            @RequestParam String lastName) {
-        return ResponseEntity.ok(userService.getUserByFullName(firstName, lastName));
-    }
 }
