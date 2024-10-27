@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  demo_one:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,3 +10,15 @@ services:
     ports:
       - "8080:8080"
     restart: always
+
+  demo_two:
+    build:
+      context: ../demoTwo
+      dockerfile: Dockerfile
+    image: demo_two
+    container_name: demo_two
+    ports:
+      - "8090:8090"
+    restart: always
+    depends_on:
+      - demo_one
