@@ -10,6 +10,8 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    depends_on:
+      - postgres
 
   demo_two:
     build:
@@ -22,3 +24,18 @@ services:
     restart: always
     depends_on:
       - demo_one
+
+  postgres:
+    image: postgres:17.0
+    container_name: postgres
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
