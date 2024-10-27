@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: demo_two
+    container_name: demo_two
+    ports:
+      - "8090:8090"
+    restart: always

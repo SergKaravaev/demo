@@ -27,3 +27,6 @@ replay_pid*
 
 # IntelliJ IDEA files
 .idea/
+
+# Build files
+build/
