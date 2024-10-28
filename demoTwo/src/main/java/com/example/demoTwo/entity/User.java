@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -21,11 +23,9 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Setter
     @Column(name = "first_name")
     private String firstName;
 
-    @Setter
     @Column(name = "last_name")
     private String lastName;
 
