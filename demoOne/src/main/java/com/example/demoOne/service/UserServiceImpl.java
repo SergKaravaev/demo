@@ -1,6 +1,6 @@
 package com.example.demoOne.service;
 
-import com.example.demoOne.dto.UserRequestDto;
+import com.example.demoOne.dto.UserDto;
 import com.example.demoOne.exception.NotFoundException;
 import com.example.demoOne.mapper.UserMapper;
 import com.example.demoOne.repository.UserRepository;
@@ -16,7 +16,7 @@ public class UserServiceImpl {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserRequestDto getUserById(Long userId) {
+    public UserDto getUserById(Long userId) {
         return userRepository.findById(userId)
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));

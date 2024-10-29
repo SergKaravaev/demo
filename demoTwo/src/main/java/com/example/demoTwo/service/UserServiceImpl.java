@@ -1,6 +1,6 @@
 package com.example.demoTwo.service;
 
-import com.example.demoTwo.dto.UserRequestDto;
+import com.example.demoTwo.dto.UserDto;
 import com.example.demoTwo.exception.NotFoundException;
 import com.example.demoTwo.mapper.UserMapper;
 import com.example.demoTwo.repository.UserRepository;
@@ -15,7 +15,7 @@ public class UserServiceImpl {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserRequestDto getUserByFullName(String firstName, String lastName) {
+    public UserDto getUserByFullName(String firstName, String lastName) {
         return userRepository.findByFirstNameAndLastName(firstName, lastName)
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));

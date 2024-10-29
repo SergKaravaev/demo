@@ -1,16 +1,15 @@
 package com.example.demoOne.mapper;
 
-import com.example.demoOne.dto.UserRequestDto;
+import com.example.demoOne.dto.UserDto;
 import com.example.demoOne.entity.User;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class UserMapper {
-    public UserRequestDto toDto(User user) {
-        if (user == null) {
-            return null;
-        }
-        UserRequestDto userRequestDto = new UserRequestDto(user.getFirstName(), user.getLastName());
-        return userRequestDto;
-    }
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    UserDto toDto(User user);
+
 }

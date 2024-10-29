@@ -1,6 +1,6 @@
 package com.example.demoOne.dto;
 
-public record UserRequestDto(
+public record UserDto(
         String firstName,
         String lastName) {
 }
