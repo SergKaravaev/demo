@@ -8,7 +8,7 @@
     <changeSet id="main-add_table_user" author="Siarhei Karavayeu">
 
         <createTable tableName="users">
-            <column name="user_id" type="bigint">
+            <column name="user_id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="first_name" type="varchar(255)">

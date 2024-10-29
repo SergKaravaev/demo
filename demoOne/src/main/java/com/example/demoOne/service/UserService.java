@@ -1,18 +1,20 @@
 package com.example.demoOne.service;
 
-import com.example.demoOne.dto.UserDto;
+import com.example.demoOne.dto.UserRequestDto;
+import com.example.demoOne.dto.UserResponseDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
-    void createUser(UserDto userDto);
+    void createUser(UserRequestDto userRequestDto);
 
-    void updateUser(Long userId, UserDto userDto);
+    void updateUser(UUID userId, UserRequestDto userRequestDto);
 
-    void deleteUser(Long userId);
+    void deleteUser(UUID userId);
 
-    UserDto getUserById(Long userId);
+    UserResponseDto getUserById(UUID userId);
 
-    List<UserDto> getAllUsers();
+    List<UserResponseDto> getAllUsers();
 }

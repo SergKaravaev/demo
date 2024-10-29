@@ -1,6 +1,7 @@
 package com.example.demoOne.service;
 
-import com.example.demoOne.dto.UserDto;
+import com.example.demoOne.dto.UserRequestDto;
+import com.example.demoOne.dto.UserResponseDto;
 import com.example.demoOne.entity.User;
 import com.example.demoOne.exception.NotFoundException;
 import com.example.demoOne.mapper.UserMapper;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,24 +26,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void createUser(UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+    public void createUser(UserRequestDto userRequestDto) {
+        User user = userMapper.toEntity(userRequestDto);
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void updateUser(Long userId, UserDto userDto) {
-        if (!userRepository.existsById(userId)) {
-            throw new NotFoundException(USER_NOT_FOUND);
-        }
-        User user = userMapper.toEntity(userDto);
+    public void updateUser(UUID userId, UserRequestDto userRequestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        user.setFirstName(userRequestDto.firstName());
+        user.setLastName(userRequestDto.lastName());
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void deleteUser(Long userId) {
+    public void deleteUser(UUID userId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(USER_NOT_FOUND);
         }
@@ -48,14 +51,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(Long userId) {
+    public UserResponseDto getUserById(UUID userId) {
         return userRepository.findById(userId)
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::toDto)

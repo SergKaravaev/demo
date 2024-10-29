@@ -13,18 +13,6 @@ services:
     depends_on:
       - postgres
 
-  demo_two:
-    build:
-      context: ../demoTwo
-      dockerfile: Dockerfile
-    image: demo_two
-    container_name: demo_two
-    ports:
-      - "8090:8090"
-    restart: always
-    depends_on:
-      - demo_one
-
   postgres:
     image: postgres:17.0
     container_name: postgres

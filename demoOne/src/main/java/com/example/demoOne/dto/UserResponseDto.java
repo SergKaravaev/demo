@@ -1,6 +1,9 @@
 package com.example.demoOne.dto;
 
-public record UserDto(
+import java.util.UUID;
+
+public record UserResponseDto(
+        UUID userId,
         String firstName,
         String lastName) {
 }
