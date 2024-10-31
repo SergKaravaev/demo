@@ -3,7 +3,7 @@ package com.example.demoTwo.controller;
 import com.example.demoTwo.controller.swagger.EmployeeControllerDocumentation;
 import com.example.demoTwo.dto.EmployeeRequestDto;
 import com.example.demoTwo.dto.EmployeeResponseDto;
-import com.example.demoTwo.service.EmployeeServiceImpl;
+import com.example.demoTwo.service.impl.EmployeeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,17 +46,17 @@ public class EmployeeController implements EmployeeControllerDocumentation {
         employeeService.deleteEmployee(employeeId);
         return ResponseEntity.noContent().build();
     }
-
-    @Override
-    @GetMapping("/{employeeId}")
-    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable UUID employeeId) {
-        return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
-    }
-
-    @Override
-    @GetMapping
-    public ResponseEntity<List<EmployeeResponseDto>> getAllEmployees() {
-        return ResponseEntity.ok(employeeService.getAllEmployees());
-    }
+//
+//    @Override
+//    @GetMapping("/{employeeId}")
+//    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable UUID employeeId) {
+//        return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
+//    }
+//
+//    @Override
+//    @GetMapping
+//    public ResponseEntity<List<EmployeeResponseDto>> getAllEmployees() {
+//        return ResponseEntity.ok(employeeService.getAllEmployees());
+//    }
 
 }

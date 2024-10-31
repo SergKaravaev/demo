@@ -39,22 +39,22 @@ public interface EmployeeControllerDocumentation {
     })
     ResponseEntity<Void> deleteEmployee(UUID employeeId);
 
-    @Operation(summary = "Get a employee by ID",
-            description = "Returns information about the employee with the specified ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employee successfully retrieved", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
-    })
-    ResponseEntity<EmployeeResponseDto> getEmployeeById(UUID employeeId);
-
-    @Operation(summary = "Get all employees",
-            description = "Returns a list of all employees")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employees successfully retrieved", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))
-            })
-    })
-    ResponseEntity<List<EmployeeResponseDto>> getAllEmployees();
+//    @Operation(summary = "Get a employee by ID",
+//            description = "Returns information about the employee with the specified ID")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Employee successfully retrieved", content = {
+//                    @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeResponseDto.class))
+//            }),
+//            @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
+//    })
+//    ResponseEntity<EmployeeResponseDto> getEmployeeById(UUID employeeId);
+//
+//    @Operation(summary = "Get all employees",
+//            description = "Returns a list of all employees")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Employees successfully retrieved", content = {
+//                    @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))
+//            })
+//    })
+//    ResponseEntity<List<EmployeeResponseDto>> getAllEmployees();
 }

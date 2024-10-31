@@ -2,7 +2,9 @@ package com.example.demoTwo.dto;
 
 import java.util.UUID;
 
-public record EmployeeRequestDto(
+public record UserDto(
         UUID userId,
-        String specializationTitle) {
+        String firstName,
+        String lastName
+) {
 }

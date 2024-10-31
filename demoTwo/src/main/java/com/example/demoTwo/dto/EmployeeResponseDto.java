@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public record EmployeeResponseDto(
         UUID employeeId,
-        String firstName,
-        String lastName) {
+        UserDto userDto,
+        String specializationTitle) {
 }

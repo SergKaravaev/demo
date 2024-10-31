@@ -1,7 +1,6 @@
 package com.example.demoTwo.service;
 
 
-
 import com.example.demoTwo.dto.EmployeeRequestDto;
 import com.example.demoTwo.dto.EmployeeResponseDto;
 
@@ -16,7 +15,7 @@ public interface EmployeeService {
 
     void deleteEmployee(UUID employeeId);
 
-    EmployeeResponseDto getEmployeeById(UUID employeeId);
-
-    List<EmployeeResponseDto> getAllEmployees();
+//    EmployeeResponseDto getEmployeeById(UUID employeeId);
+//
+//    List<EmployeeResponseDto> getAllEmployees();
 }
