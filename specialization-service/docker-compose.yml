@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  specialization-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: specialization-service
+    container_name: specialization-service
+    ports:
+      - "8070:8070"
+    restart: always
+    depends_on:
+      - specialization_db
+
+  specialization_db:
+    image: postgres:17.0
+    command:
+      - "postgres"
+      - "-c"
+      - "port=5445"
+    container_name: specialization_db
+    environment:
+      POSTGRES_DB: specialization_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - specialization_db:/var/lib/postgresql/data
+    ports:
+      - "5445:5445"
+
+volumes:
+  specialization_db:
