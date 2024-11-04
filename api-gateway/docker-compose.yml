@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+      - "9000:9000"
+    restart: always
+    networks:
+      - api-gateway
+    depends_on:
+      - user-service
+      - employee-service
+
+  user-service:
+    build:
+      context: ../user-service
+      dockerfile: Dockerfile
+    image: user-service
+    container_name: user-service
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - api-gateway
+    depends_on:
+      - user_db
+
+  user_db:
+    image: postgres:17.0
+    container_name: user_db
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - user_db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - api-gateway
+
+  employee-service:
+    build:
+      context: ../employee-service
+      dockerfile: Dockerfile
+    image: employee-service
+    container_name: employee-service
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - api-gateway
+    depends_on:
+      - employee_db
+
+  employee_db:
+    image: postgres:17.0
+    command:
+      - "postgres"
+      - "-c"
+      - "port=5442"
+    container_name: employee_db
+    environment:
+      POSTGRES_DB: employee_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - employee_db:/var/lib/postgresql/data
+    ports:
+      - "5442:5442"
+    networks:
+      - api-gateway
+
+volumes:
+  user_db:
+  employee_db:
+
+networks:
+  api-gateway:
+    driver: bridge
+
+
