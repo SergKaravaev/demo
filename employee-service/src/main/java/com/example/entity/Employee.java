@@ -28,7 +28,7 @@ public class Employee {
     @Column(name = "user_id")
     private UUID userId;
 
-    @Column(name = "specialization_title")
-    private String specializationTitle;
+    @Column(name = "specialization_id")
+    private UUID specializationId;
 
 }

@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
+import com.example.dto.SpecializationDto;
 import com.example.dto.UserDto;
 import com.example.entity.Employee;
 import org.mapstruct.Mapper;
@@ -12,17 +13,17 @@ public interface EmployeeMapper {
 
     @Mapping(target = "employeeId", source = "employee.employeeId")
     @Mapping(target = "userDto", source = "userDto")
-    @Mapping(target = "specializationTitle", source = "employee.specializationTitle")
-    EmployeeResponseDto toDto(Employee employee, UserDto userDto);
+    @Mapping(target = "specializationDto", source = "employee.specializationId")
+    EmployeeResponseDto toDto(Employee employee, UserDto userDto, SpecializationDto specializationDto);
 
     @Mapping(target = "employeeId", source = "employee.employeeId")
     @Mapping(target = "userDto.userId", source = "employee.userId")
-    @Mapping(target = "specializationTitle", source = "employee.specializationTitle")
+    @Mapping(target = "specializationDto.specializationId", source = "employee.specializationId")
     EmployeeResponseDto toDto(Employee employee);
 
     @Mapping(target = "employeeId", ignore = true)
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "specializationTitle", source = "specializationTitle")
+    @Mapping(target = "specializationId", source = "specializationId")
     Employee toEntity(EmployeeRequestDto employeeRequestDto);
 
 }

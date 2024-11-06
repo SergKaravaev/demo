@@ -3,6 +3,7 @@ package com.example.service.impl;
 import com.example.client.UserServiceClient;
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
+import com.example.dto.SpecializationDto;
 import com.example.dto.UserDto;
 import com.example.entity.Employee;
 import com.example.exception.NotFoundException;
@@ -12,6 +13,7 @@ import com.example.service.EmployeeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new NotFoundException(EMPLOYEE_NOT_FOUND));
         userServiceClient.checkUserExists(employeeRequestDto.userId());
         employee.setUserId(employeeRequestDto.userId());
-        employee.setSpecializationTitle(employeeRequestDto.specializationTitle());
+        employee.setSpecializationId(employeeRequestDto.specializationId());
         employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
     }
@@ -63,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new NotFoundException(EMPLOYEE_NOT_FOUND));
         ResponseEntity<UserDto> userResponse = userServiceClient.getUserById(employee.getUserId());
         UserDto userDto = userResponse.getBody();
-        return employeeMapper.toDto(employee, userDto);
+        return employeeMapper.toDto(employee, userDto, new SpecializationDto(UUID.randomUUID(), "title"));
     }
 
     @Override
@@ -72,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(employee -> {
                     ResponseEntity<UserDto> userResponse = userServiceClient.getUserById(employee.getUserId());
                     UserDto userDto = userResponse.getBody();
-                    return employeeMapper.toDto(employee, userDto);
+                    return employeeMapper.toDto(employee, userDto, new SpecializationDto(UUID.randomUUID(), "title"));
                 }).toList();
     }
 
