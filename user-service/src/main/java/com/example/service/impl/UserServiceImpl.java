@@ -48,9 +48,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(UUID userId) {
         checkUserExists(userId);
-        if (Boolean.TRUE.equals(employeeServiceClient.checkEmployeeExistsByUserId(userId).getBody())) {
-            employeeServiceClient.deleteEmployeeByUserId(userId);
-        }
+        deleteEmployee(userId);
         userRepository.deleteById(userId);
     }
 
@@ -76,4 +74,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    private void deleteEmployee(UUID userId) {
+        if (Boolean.TRUE.equals(employeeServiceClient.checkEmployeeExistsByUserId(userId).getBody())) {
+            employeeServiceClient.deleteEmployeeByUserId(userId);
+        }
+    }
 }

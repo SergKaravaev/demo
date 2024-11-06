@@ -13,7 +13,6 @@ import com.example.service.EmployeeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto) {
-        userServiceClient.checkUserExists(employeeRequestDto.userId());
+        checkUserExists(employeeRequestDto.userId());
         Employee employee = employeeMapper.toEntity(employeeRequestDto);
         employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
@@ -43,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponseDto updateEmployee(UUID employeeId, EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new NotFoundException(EMPLOYEE_NOT_FOUND));
-        userServiceClient.checkUserExists(employeeRequestDto.userId());
+        checkUserExists(employeeRequestDto.userId());
         employee.setUserId(employeeRequestDto.userId());
         employee.setSpecializationId(employeeRequestDto.specializationId());
         employeeRepository.save(employee);
@@ -63,8 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponseDto getEmployeeById(UUID employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new NotFoundException(EMPLOYEE_NOT_FOUND));
-        ResponseEntity<UserDto> userResponse = userServiceClient.getUserById(employee.getUserId());
-        UserDto userDto = userResponse.getBody();
+        UserDto userDto = getUserById(employee.getUserId());
         return employeeMapper.toDto(employee, userDto, new SpecializationDto(UUID.randomUUID(), "title"));
     }
 
@@ -72,8 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeResponseDto> getAllEmployees() {
         return employeeRepository.findAll().stream()
                 .map(employee -> {
-                    ResponseEntity<UserDto> userResponse = userServiceClient.getUserById(employee.getUserId());
-                    UserDto userDto = userResponse.getBody();
+                    UserDto userDto = getUserById(employee.getUserId());
                     return employeeMapper.toDto(employee, userDto, new SpecializationDto(UUID.randomUUID(), "title"));
                 }).toList();
     }
@@ -87,5 +84,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public void deleteEmployeeByUserId(UUID userId) {
         employeeRepository.deleteEmployeeByUserId(userId);
+    }
+
+    private void checkUserExists(UUID userId) {
+        userServiceClient.checkUserExists(userId);
+    }
+
+    private UserDto getUserById(UUID userId) {
+        return userServiceClient.getUserById(userId).getBody();
     }
 }
