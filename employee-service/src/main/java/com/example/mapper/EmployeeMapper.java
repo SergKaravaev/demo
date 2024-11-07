@@ -13,7 +13,7 @@ public interface EmployeeMapper {
 
     @Mapping(target = "employeeId", source = "employee.employeeId")
     @Mapping(target = "userDto", source = "userDto")
-    @Mapping(target = "specializationDto", source = "employee.specializationId")
+    @Mapping(target = "specializationDto", source = "specializationDto")
     EmployeeResponseDto toDto(Employee employee, UserDto userDto, SpecializationDto specializationDto);
 
     @Mapping(target = "employeeId", source = "employee.employeeId")

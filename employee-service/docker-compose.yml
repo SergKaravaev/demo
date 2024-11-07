@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   employee-service:
     build:
@@ -11,10 +9,8 @@ services:
       - "8090:8090"
     restart: always
     networks:
-      - api-gateway
+      - demo-network
     depends_on:
-      - specialization-service
-      - user-service
       - employee_db
 
   employee_db:
@@ -33,73 +29,11 @@ services:
     ports:
       - "5442:5442"
     networks:
-      - api-gateway
-  
-  user-service:
-    build:
-      context: ../user-service
-      dockerfile: Dockerfile
-    image: user-service
-    container_name: user-service
-    ports:
-      - "8080:8080"
-    restart: always
-    networks:
-      - api-gateway
-    depends_on:
-      - user_db
-  
-  user_db:
-    image: postgres:17.0
-    container_name: user_db
-    environment:
-      POSTGRES_DB: user_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "password"
-    volumes:
-      - user_db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - api-gateway
-
-  specialization-service:
-    build:
-      context: ../specialization-service
-      dockerfile: Dockerfile
-    image: specialization-service
-    container_name: specialization-service
-    ports:
-      - "8070:8070"
-    networks:
-      - api-gateway
-    restart: always
-    depends_on:
-      - specialization_db
-
-  specialization_db:
-    image: postgres:17.0
-    command:
-      - "postgres"
-      - "-c"
-      - "port=5445"
-    container_name: specialization_db
-    environment:
-      POSTGRES_DB: specialization_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "password"
-    volumes:
-      - specialization_db:/var/lib/postgresql/data
-    ports:
-      - "5445:5445"
-    networks:
-      - api-gateway
+      - demo-network
 
 volumes:
-  user_db:
   employee_db:
-  specialization_db:
 
 networks:
-  api-gateway:
-    driver: bridge
+  demo-network:
+    external: true

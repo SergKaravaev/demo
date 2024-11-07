@@ -1,0 +1,17 @@
+services:
+  config-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: config-service
+    container_name: config-service
+    volumes:
+      - ./config-repo:/src/main/resources/config-repo
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    networks:
+      - demo-network
+
+networks:
+  demo-network:
+    external: true
