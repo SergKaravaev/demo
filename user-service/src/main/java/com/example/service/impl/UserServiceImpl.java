@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.client.EmployeeServiceClient;
+import com.example.dto.EmployeeDto;
 import com.example.dto.UserRequestDto;
 import com.example.dto.UserResponseDto;
 import com.example.entity.User;
@@ -45,12 +46,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(UUID userId) {
+        EmployeeDto employeeDto = getEmployeeByUserId(userId);
+        UserResponseDto userResponseDto = getUserById(userId);
         checkUserExists(userId);
-        deleteEmployee(userId);
-        userRepository.deleteById(userId);
+        try {
+            deleteEmployee(userId);
+            userRepository.deleteById(userId);
+        } catch (Exception exception) {
+            rollbackEmployee(employeeDto);
+            rollbackUser(userResponseDto);
+        }
     }
+
 
     @Override
     public UserResponseDto getUserById(UUID userId) {
@@ -78,5 +86,18 @@ public class UserServiceImpl implements UserService {
         if (Boolean.TRUE.equals(employeeServiceClient.checkEmployeeExistsByUserId(userId).getBody())) {
             employeeServiceClient.deleteEmployeeByUserId(userId);
         }
+    }
+
+    private EmployeeDto getEmployeeByUserId(UUID userId) {
+        return employeeServiceClient.getEmployeeByUserId(userId).getBody();
+    }
+
+    private void rollbackEmployee(EmployeeDto employeeDto) {
+        employeeServiceClient.rollbackEmployee(employeeDto);
+    }
+
+    private void rollbackUser(UserResponseDto userResponseDto) {
+        User user = userMapper.toEntity(userResponseDto);
+        userRepository.save(user);
     }
 }

@@ -19,4 +19,9 @@ public interface UserMapper {
     @Mapping(target = "lastName", source = "lastName")
     User toEntity(UserRequestDto userRequestDto);
 
+    @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    User toEntity(UserResponseDto userResponseDto);
+
 }

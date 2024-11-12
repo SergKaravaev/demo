@@ -1,7 +1,10 @@
 package com.example.service;
 
+import com.example.dto.EmployeeDto;
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +21,11 @@ public interface EmployeeService {
 
     List<EmployeeResponseDto> getAllEmployees();
 
+    EmployeeDto getEmployeeByUserId(UUID userId);
+
     boolean checkEmployeeExistsByUserId(UUID userId);
 
     void deleteEmployeeByUserId(UUID userId);
+
+    void rollbackEmployee(EmployeeDto employeeDto);
 }

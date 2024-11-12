@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.controller.swagger.EmployeeControllerDocumentation;
+import com.example.dto.EmployeeDto;
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
 import com.example.service.EmployeeService;
@@ -58,6 +59,11 @@ public class EmployeeController implements EmployeeControllerDocumentation {
     }
 
     @Override
+    @GetMapping("/get-employee/{userId}")
+    public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable UUID userId) {
+        return ResponseEntity.ok(employeeService.getEmployeeByUserId(userId));
+    }
+
     @GetMapping("/{userId}/exists")
     public ResponseEntity<Boolean> checkEmployeeExistsByUserId(@PathVariable UUID userId) {
         return ResponseEntity.ok(employeeService.checkEmployeeExistsByUserId(userId));
@@ -67,6 +73,13 @@ public class EmployeeController implements EmployeeControllerDocumentation {
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<Void> deleteEmployeeByUserId(@PathVariable UUID userId) {
         employeeService.deleteEmployeeByUserId(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @PostMapping("/rollback")
+    public ResponseEntity<Void> rollbackEmployee(@RequestBody EmployeeDto employeeDto) {
+        employeeService.rollbackEmployee(employeeDto);
         return ResponseEntity.noContent().build();
     }
 

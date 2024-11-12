@@ -2,7 +2,8 @@ package com.example.dto;
 
 import java.util.UUID;
 
-public record EmployeeRequestDto(
+public record EmployeeDto(
+        UUID employeeId,
         UUID userId,
         UUID specializationId) {
 }

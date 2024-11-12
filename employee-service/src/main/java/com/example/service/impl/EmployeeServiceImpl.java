@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.client.UserServiceClient;
+import com.example.dto.EmployeeDto;
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
 import com.example.dto.SpecializationDto;
@@ -81,9 +82,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeDto getEmployeeByUserId(UUID userId) {
+        Employee employee = employeeRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException(EMPLOYEE_NOT_FOUND));
+        return employeeMapper.toEmployeeDto(employee);
+    }
+
+    @Override
     @Transactional
     public void deleteEmployeeByUserId(UUID userId) {
         employeeRepository.deleteEmployeeByUserId(userId);
+    }
+
+    @Override
+    public void rollbackEmployee(EmployeeDto employeeDto) {
+        Employee employee = employeeMapper.toEntity(employeeDto);
+        employeeRepository.save(employee);
     }
 
     private void checkUserExists(UUID userId) {

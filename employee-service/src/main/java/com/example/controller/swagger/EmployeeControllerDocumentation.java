@@ -1,5 +1,6 @@
 package com.example.controller.swagger;
 
+import com.example.dto.EmployeeDto;
 import com.example.dto.EmployeeRequestDto;
 import com.example.dto.EmployeeResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,6 +67,16 @@ public interface EmployeeControllerDocumentation {
     })
     ResponseEntity<Boolean> checkEmployeeExistsByUserId(UUID userId);
 
+    @Operation(summary = "Get a employee by UserId",
+            description = "Returns information about the employee with the UserId")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Employee successfully retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
+    })
+    ResponseEntity<EmployeeDto> getEmployeeByUserId(UUID userId);
+
     @Operation(summary = "Delete a employee by user ID",
             description = "Deletes the employee with the user ID")
     @ApiResponses(value = {
@@ -73,4 +84,12 @@ public interface EmployeeControllerDocumentation {
             @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
     })
     ResponseEntity<Void> deleteEmployeeByUserId(UUID userId);
+
+    @Operation(summary = "rollback employee",
+            description = "rollback employee")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Employee successfully rollback", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Validation error in request body", content = @Content)
+    })
+    ResponseEntity<Void> rollbackEmployee(EmployeeDto employeeDto);
 }
