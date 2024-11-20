@@ -47,16 +47,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UUID userId) {
-        EmployeeDto employeeDto = getEmployeeByUserId(userId);
-        UserResponseDto userResponseDto = getUserById(userId);
+
         checkUserExists(userId);
-        try {
+
             deleteEmployee(userId);
             userRepository.deleteById(userId);
-        } catch (Exception exception) {
-            rollbackEmployee(employeeDto);
-            rollbackUser(userResponseDto);
-        }
+
     }
 
 

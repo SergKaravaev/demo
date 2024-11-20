@@ -14,7 +14,7 @@
             <column name="user_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
-            <column name="specialization_id" type="uuid">
+            <column name="specialization_title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

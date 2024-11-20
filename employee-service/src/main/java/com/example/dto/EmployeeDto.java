@@ -5,5 +5,5 @@ import java.util.UUID;
 public record EmployeeDto(
         UUID employeeId,
         UUID userId,
-        UUID specializationId) {
+        String specializationTitle) {
 }

@@ -6,9 +6,6 @@ docker-compose up --build -d
 cd ..\user-service
 docker-compose up --build -d
 
-cd ..\specialization-service
-docker-compose up --build -d
-
 cd ..\employee-service
 docker-compose up --build -d
 

@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public record EmployeeRequestDto(
         UUID userId,
-        UUID specializationId) {
+        String specializationTitle) {
 }

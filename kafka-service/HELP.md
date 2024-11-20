@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.example.specialization-service' is invalid and this project uses 'com.example.specialization_service' instead.
+* The original package name 'com.example.kafka-service' is invalid and this project uses 'com.example.kafka_service' instead.
 
 # Getting Started
 
