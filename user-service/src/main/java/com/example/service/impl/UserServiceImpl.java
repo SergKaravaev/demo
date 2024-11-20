@@ -1,13 +1,12 @@
 package com.example.service.impl;
 
-import com.example.client.EmployeeServiceClient;
-import com.example.dto.EmployeeDto;
 import com.example.dto.UserRequestDto;
 import com.example.dto.UserResponseDto;
 import com.example.entity.User;
 import com.example.exception.NotFoundException;
 import com.example.mapper.UserMapper;
 import com.example.repository.UserRepository;
+import com.example.saga.UserOrchestratorService;
 import com.example.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +21,9 @@ public class UserServiceImpl implements UserService {
 
     private static final String USER_NOT_FOUND = "User not found";
 
-    private final EmployeeServiceClient employeeServiceClient;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final UserOrchestratorService userOrchestratorService;
 
     @Override
     @Transactional
@@ -47,12 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UUID userId) {
-
-        checkUserExists(userId);
-
-            deleteEmployee(userId);
-            userRepository.deleteById(userId);
-
+        userOrchestratorService.deleteUser(userId);
     }
 
 
@@ -76,24 +70,5 @@ public class UserServiceImpl implements UserService {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(USER_NOT_FOUND);
         }
-    }
-
-    private void deleteEmployee(UUID userId) {
-        if (Boolean.TRUE.equals(employeeServiceClient.checkEmployeeExistsByUserId(userId).getBody())) {
-            employeeServiceClient.deleteEmployeeByUserId(userId);
-        }
-    }
-
-    private EmployeeDto getEmployeeByUserId(UUID userId) {
-        return employeeServiceClient.getEmployeeByUserId(userId).getBody();
-    }
-
-    private void rollbackEmployee(EmployeeDto employeeDto) {
-        employeeServiceClient.rollbackEmployee(employeeDto);
-    }
-
-    private void rollbackUser(UserResponseDto userResponseDto) {
-        User user = userMapper.toEntity(userResponseDto);
-        userRepository.save(user);
     }
 }

@@ -78,9 +78,8 @@ public class EmployeeController implements EmployeeControllerDocumentation {
 
     @Override
     @PostMapping("/rollback")
-    public ResponseEntity<Void> rollbackEmployee(@RequestBody EmployeeDto employeeDto) {
-        employeeService.rollbackEmployee(employeeDto);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Boolean> rollbackEmployee(@RequestBody EmployeeDto employeeDto) {
+        return ResponseEntity.ok(employeeService.rollbackEmployee(employeeDto));
     }
 
 }

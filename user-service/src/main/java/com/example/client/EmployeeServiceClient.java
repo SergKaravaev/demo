@@ -14,9 +14,6 @@ import java.util.UUID;
 @FeignClient(name = "employee-service", url = "${employee.service.url}")
 public interface EmployeeServiceClient {
 
-    @GetMapping("/employees/{userId}/exists")
-    ResponseEntity<Boolean> checkEmployeeExistsByUserId(@PathVariable UUID userId);
-
     @DeleteMapping("/employees/users/{userId}")
     ResponseEntity<Void> deleteEmployeeByUserId(@PathVariable UUID userId);
 
@@ -24,5 +21,5 @@ public interface EmployeeServiceClient {
     ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable UUID userId);
 
     @PostMapping("/employees/rollback")
-    ResponseEntity<Void> rollbackEmployee(@RequestBody EmployeeDto employeeDto);
+    ResponseEntity<Boolean> rollbackEmployee(@RequestBody EmployeeDto employeeDto);
 }

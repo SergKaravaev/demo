@@ -91,5 +91,5 @@ public interface EmployeeControllerDocumentation {
             @ApiResponse(responseCode = "204", description = "Employee successfully rollback", content = @Content),
             @ApiResponse(responseCode = "400", description = "Validation error in request body", content = @Content)
     })
-    ResponseEntity<Void> rollbackEmployee(EmployeeDto employeeDto);
+    ResponseEntity<Boolean> rollbackEmployee(EmployeeDto employeeDto);
 }

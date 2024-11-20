@@ -93,9 +93,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void rollbackEmployee(EmployeeDto employeeDto) {
-        Employee employee = employeeMapper.toEntity(employeeDto);
-        employeeRepository.save(employee);
+    public boolean rollbackEmployee(EmployeeDto employeeDto) {
+        try {
+            Employee employee = employeeMapper.toEntity(employeeDto);
+            employeeRepository.save(employee);
+            return employeeRepository.existsById(employee.getEmployeeId());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void checkUserExists(UUID userId) {

@@ -27,5 +27,5 @@ public interface EmployeeService {
 
     void deleteEmployeeByUserId(UUID userId);
 
-    void rollbackEmployee(EmployeeDto employeeDto);
+    boolean rollbackEmployee(EmployeeDto employeeDto);
 }
